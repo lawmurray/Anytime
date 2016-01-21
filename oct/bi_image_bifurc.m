@@ -1,4 +1,4 @@
-% Copyright (C) 2011-2013
+% Copyright (C) 2011-2015
 % Author: Lawrence Murray <lawrence.murray@csiro.au>
 % $Rev: 2272 $
 % $Date: 2011-12-12 19:53:13 +1100 (Mon, 12 Dec 2011) $
@@ -38,30 +38,31 @@ function bi_image_bifurc (file, param, param_coord, state, state_coord, ps, ts)
     
     % data
     x = bi_read_var (file, param, param_coord, ps, ts);
-    y = bi_read_var (file, state, state_coord, ps, ts);
-    
+
     % data extents
-    xmin = 0; %min(x);
-    xmax = 12; %max(x);
-    ymin = -10; %min(y(:));
-    ymax = 10; %max(y(:));
+    xmin = 0;
+    xmax = 20;
+    ymin = -20;
+    ymax = 20;
     xs = linspace(xmin, xmax, RES_X + 1);
     ys = linspace(ymin, ymax, RES_Y + 1);
     
     % bin
     [n1,ii] = histc(x, xs);
     n1 = n1(1:end-1); % chop off last bin
+
+    y = bi_read_var (file, state, state_coord, ps, ts);
     n2 = histc(y, ys, 2);
-    for i = 2:8
-        y = bi_read_var (file, state, i, ps, ts);
-	n2 = n2 + histc(y, ys, 2);
+    for i = 2:4
+      y = bi_read_var (file, state, i, ps, ts);
+      n2 = n2 + histc(y, ys, 2);
     end
     n3 = accumdim (ii, n2, 1)';
     n3 = n3 ./ repmat(n1', rows (n3), 1);
     for i = 1:columns (n3)
-        mn = min (n3(:,i));
-	mx = max (n3(:,i));
-	n3(:,i) = (n3(:,i) - mn)/(mx - mn);
+      mn = min (n3(:,i));
+	    mx = max (n3(:,i));
+	    n3(:,i) = (n3(:,i) - mn)/(mx - mn);
     end
 
     % plot

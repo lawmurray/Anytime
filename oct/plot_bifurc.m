@@ -1,4 +1,4 @@
-% Copyright (C) 2013
+% Copyright (C) 2015
 % Author: Lawrence Murray <lawrence.murray@csiro.au>
 % $Rev$
 % $Date$
@@ -13,18 +13,9 @@
 function plot_bifurc ()
     colormap(flipud(gray));
 	 
-    subplot(1, 2, 1);
-    bi_image_bifurc('results/bifurc_deterministic.nc', 'F', [], 'x', 1, [], [40:801]);
+    bi_image_bifurc('results/bifurc.nc', 'F', [], 'x', 1, [], [40:801]);
     axis('tight');
-    title('Deterministic');
     xlabel ('F');
     ylabel ('x');
-    axis([0 12 -5 10]);
-
-    subplot(1, 2, 2);
-    bi_image_bifurc('results/bifurc_stochastic.nc', 'F', [], 'x', 1, [], [40:801]);
     axis('tight');
-    title ('Stochastic');
-    xlabel ('F');
-    axis([0 12 -5 10]);
 end
