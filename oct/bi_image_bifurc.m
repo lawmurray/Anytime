@@ -13,7 +13,7 @@
 %
 function bi_image_bifurc (file, param, param_coord, state, state_coord, ps, ts)    
     % constants
-    RES_X = 1400;
+    RES_X = 1792;
     RES_Y = 1000;
         
     % check arguments
