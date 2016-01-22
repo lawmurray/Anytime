@@ -13,7 +13,7 @@
 function plot_bifurc ()
     colormap(flipud(gray));
 	 
-    bi_image_bifurc('results/bifurc.nc', 'F', [], 'x', 1, [], [40:801]);
+    bi_image_bifurc('results/bifurc.nc', 'F', [], 'x', 1);
     axis('tight');
     xlabel ('F');
     ylabel ('x');

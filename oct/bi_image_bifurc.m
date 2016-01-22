@@ -13,8 +13,8 @@
 %
 function bi_image_bifurc (file, param, param_coord, state, state_coord, ps, ts)    
     % constants
-    RES_X = 1280;
-    RES_Y = 800;
+    RES_X = 1400;
+    RES_Y = 1000;
         
     % check arguments
     if nargin < 4 || nargin > 7
@@ -41,9 +41,9 @@ function bi_image_bifurc (file, param, param_coord, state, state_coord, ps, ts)
 
     % data extents
     xmin = 0;
-    xmax = 20;
-    ymin = -20;
-    ymax = 20;
+    xmax = 7;
+    ymin = -6;
+    ymax = 8;
     xs = linspace(xmin, xmax, RES_X + 1);
     ys = linspace(ymin, ymax, RES_Y + 1);
     
