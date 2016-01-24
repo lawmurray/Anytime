@@ -1,21 +1,27 @@
-% Copyright (C) 2015
-% Author: Lawrence Murray <lawrence.murray@csiro.au>
-% $Rev$
-% $Date$
-
-% -*- texinfo -*-
-% @deftypefn {Function File} plot_bifurc ()
-%
-% Produce bifurcation plots for Lorenz '96 model.
-%
-% @end deftypefn
-%
 function plot_bifurc ()
-    colormap(flipud(gray));
-	 
-    bi_image_bifurc('results/bifurc.nc', 'F', [], 'x', 1);
-    axis('tight');
-    xlabel ('F');
-    ylabel ('x');
-    axis('tight');
+  % data extents
+  fs = linspace(0, 7, 1792);
+  xs = linspace(-6, 8, 4096);
+
+  % bin
+  x = ncread('results/bifurc.nc', 'x');
+  P = zeros(length(xs), length(fs));
+  for i = 1:length(fs)
+    printf("%d ", i);
+    fflush(stdout);
+    n = histc(x(i,:,:)(:), xs);
+    mn = min(n);
+    mx = max(n);
+    p = (n - mn)/(mx - mn);
+    P(:,i) = p;
+  end
+
+  cla;
+  imagesc (fs, xs, P);
+  colormap(flipud(gray));
+  axis('tight');
+  xlabel ('F');
+  ylabel ('x');
+  %grid on;
+  box on;
 end
