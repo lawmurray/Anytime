@@ -5,14 +5,14 @@ model Lorenz96 {
   dim n(size = 8, boundary = 'cyclic')
 
   const h = 0.05     // step size
-  const sigma = 0.0  // diffusion standard deviation
+  const sigma = 0.1  // diffusion standard deviation
   const minF = 0.0
   const maxF = 7.0
 
-  param F          // forcing
-  state x[n]       // state variables
-  noise deltaW[n]  // Wiener process increments
-  obs y[n]         // observations
+  param F                          // forcing
+  state x[n]                       // state variables
+  noise deltaW[n](has_output = 0)  // Wiener process increments
+  obs y[n]                         // observations
 
   sub parameter {
     F ~ uniform(minF, maxF)
