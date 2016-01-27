@@ -13,5 +13,7 @@ function plot_paths ()
   %grid on;
   xlabel('t');
   ylabel('x');
+  grid on;
   box on;
+  set(gca, 'ticklength', [0 0]);
 end

@@ -1,40 +1,31 @@
 function plot_tau()
   F = ncread('data/init.nc', 'F');
   X = [];
-  for i = 0:9
+  for i = 1:8
     X = [X, dlmread(sprintf('results/tau%d.csv', i))];
   end
+  X = X/1e6;  % convert us to s
 
-  mn = quantile(X, 0.1, 2);
-  mx = quantile(X, 0.9, 2);
+  % smooth mean
   m = median(X, 2);
+  meanfunc = @meanConst;
+  hyp.mean = [0.5];
+  covfunc = @covSEiso;
+  hyp.cov = log([0.25; 1]);
+  likfunc = @likGauss; sn = 0.1; hyp.lik = log(sn);
+  gp(hyp, @infExact, meanfunc, covfunc, likfunc, F, m);
+  [m s2] = gp(hyp, @infExact, meanfunc, covfunc, likfunc, F, m, F);
 
   cla;
-  area_between(F, mn, mx, [0.6 0.6 0.6], 0.5, 1.0);
+  plot(F, X, '.', 'color', [0.8 0.8 0.8], 'markersize', 2);
   hold on;
   plot(F, m, 'k', 'linewidth', 3);
   hold off;
 
-  %f = F;
-  %c = linspace(0, 1e6, 200)';
-  %
-  %P = zeros(length(c), length(f));
-  %for i = 1:length(f)
-  %  printf("%d ", i);
-  %  fflush(stdout);
-  %  D = 1;
-  %  N = columns(X);
-  %  h = 2.0*(4.0/((D + 2.0)*N))**(1.0/(N + 4.0))*std(X(i,:));
-  %  p = kernel_density(c, X(i,:)', h);
-  %  P(:,i) = p/max(p);
-  %end
-  %
-  %cla;
-  %imagesc(f, c/1e6, P);
-  %colormap(flipud(gray));
-  %xlabel('F');
-  %ylabel('c (s)');
-  %%grid on;
-
+  xlabel('F');
+  ylabel('c (s)');
+  axis([0 7 0 1]);
+  grid on;
   box on;
+  set(gca, 'ticklength', [0 0]);
 end

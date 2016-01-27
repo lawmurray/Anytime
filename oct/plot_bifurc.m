@@ -4,7 +4,7 @@ function plot_bifurc ()
   xs = linspace(-6, 8, 4096);
 
   % bin
-  x = ncread('results/bifurc.nc', 'x');
+  x = ncread('results/bifurc.nc', 'x')(:,:,25001:end);
   P = zeros(length(xs), length(fs));
   for i = 1:length(fs)
     printf("%d ", i);
@@ -22,6 +22,7 @@ function plot_bifurc ()
   axis('tight');
   xlabel ('F');
   ylabel ('x');
-  %grid on;
+  grid on;
   box on;
+  set(gca, 'ticklength', [0 0]);
 end
