@@ -1,10 +1,11 @@
-function plot_bifurc ()
+function plot_bifurc(dir)
   % data extents
   fs = linspace(0, 7, 1792);
   xs = linspace(-6, 8, 4096);
 
   % bin
-  x = ncread('results/bifurc.nc', 'x')(:,:,25001:end);
+  file = sprintf('%s/bifurc.nc', dir);
+  x = ncread(file, 'x')(:,:,25001:end);
   P = zeros(length(xs), length(fs));
   for i = 1:length(fs)
     printf("%d ", i);

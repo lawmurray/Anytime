@@ -1,8 +1,9 @@
-function plot_paths ()
+function plot_paths(dir)
+file = sprintf('%s/bifurc.nc', dir);
   ps = 1792*[1 3 5 7]/7;
   ts = [2000:2400];
-  t = bi_read_var('results/bifurc.nc', 'time', [], [], ts);
-  x = bi_read_var('results/bifurc.nc', 'x', 1, ps, ts);
+  t = bi_read_var(file, 'time', [], [], ts);
+  x = bi_read_var(file, 'x', 1, ps, ts);
   cla;
   hold on;
   for i = 1:rows(x);
