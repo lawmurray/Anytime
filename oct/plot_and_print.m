@@ -1,37 +1,20 @@
-% Copyright (C) 2013
-% Author: Lawrence Murray <lawrence.murray@csiro.au>
-% $Rev$
-% $Date$
+function plot_and_print()
+  figDir = 'figs';
+  mkdir(figDir);
 
-% -*- texinfo -*-
-% @deftypefn {Function File} plot_and_print ()
-%
-% Produce plots and print for manuscript.
-% @end deftypefn
-%
-function plot_and_print ()
-    figDir = 'figs';
-    mkdir(figDir);
+  % output setup
+  sz = [ 10 8.5 ];
+  figure(1, 'visible', 'off');
+  h = figure(1);
+  set (h, 'papersize', sz);
+  %set (h, 'paperposition', [0,0,sz]);
+  orient('tall');
 
-    % state estimates
-    set (figure(1), 'papersize', [9 8]);
-    set (figure(1), 'paperposition', [0 0 9 8]);
-    orient ('tall');
-    plot_states(1:4);
-    saveas (figure(1), sprintf('%s/state1.svg', figDir));
-
-    plot_states(5:8);
-    saveas (figure(1), sprintf('%s/state2.svg', figDir));
-
-    set (figure(1), 'papersize', [5 8]);
-    set (figure(1), 'paperposition', [0 0 5 8]);
-    orient ('landscape');
-    hist_params;
-    saveas (figure(1), sprintf('%s/param.svg', figDir));
-
-    %plot_times;
-    %saveas (figure(1), sprintf('%s/time.svg', figDir));
-
-    %plot_bifurc;
-    %saveas (figure(1), sprintf('%s/bifurc.pdf', figDir));
+  subplot(3, 1, 1);
+  plot_paths;
+  subplot(3, 1, 2);
+  plot_bifurc;
+  subplot(3, 1, 3);
+  plot_tau;
+  saveas(h, sprintf('%s/lorenz96.svg', figDir));
 end
