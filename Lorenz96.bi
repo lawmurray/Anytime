@@ -4,8 +4,8 @@
 model Lorenz96 {
   dim n(size = 8, boundary = 'cyclic')
 
-  const h = 0.05     // step size
-  const sigma = 0.5  // diffusion standard deviation
+  const h = 0.05      // step size
+  const sigma = 0.25  // diffusion standard deviation
   const minF = 0.0
   const maxF = 7.0
 
