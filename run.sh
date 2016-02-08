@@ -1,6 +1,7 @@
 #!/bin/sh
 
-#libbi sample @config.conf @posterior.conf
+export CUDA_VISIBLE_DEVICES=1,2,6,7
+libbi sample @config.conf @posterior.conf --tmoves 3600
 
 for i in `seq 0 3`
 do

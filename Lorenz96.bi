@@ -5,7 +5,7 @@ model Lorenz96 {
   dim n(size = 8, boundary = 'cyclic')
 
   const h = 0.05     // step size
-  const sigma = 0.1  // diffusion standard deviation
+  const sigma = 0.5  // diffusion standard deviation
   const minF = 0.0
   const maxF = 7.0
 
@@ -19,7 +19,7 @@ model Lorenz96 {
   }
 
   sub initial {
-    x[n] ~ uniform(-(F + 1.0), F + 1.0)
+    x[n] ~ gaussian(0.0, 0.5*F)
   }
 
   sub transition(delta = h) {
@@ -34,10 +34,10 @@ model Lorenz96 {
   }
 
   sub proposal_parameter {
-    F ~ truncated_gaussian(F, 0.1, minF, maxF);
+    F ~ truncated_gaussian(F, 1.0e-4, minF, maxF);
   }
 
   sub proposal_initial {
-    x[n] ~ truncated_gaussian(x[n], 0.1, -(F + 1.0), F + 1.0)
+    x[n] ~ gaussian(x[n], 1.0e-4)
   }
 }
