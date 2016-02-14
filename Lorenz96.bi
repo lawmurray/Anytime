@@ -19,12 +19,12 @@ model Lorenz96 {
   }
 
   sub initial {
-    x[n] ~ gaussian(0.0, 0.5*F)
+    x[n] ~ gaussian(0.0, F/3.0)
   }
 
   sub transition(delta = h) {
     deltaW[n] ~ wiener()
-    ode(alg = 'RK4(3)', h = h, atoler = 1.0e-6, rtoler = 1.0e-6) {
+    ode(alg = 'RK4(3)', h = h, atoler = 1.0e-4, rtoler = 1.0e-4) {
       dx[n]/dt = x[n-1]*(x[n+1] - x[n-2]) - x[n] + F + sigma*deltaW[n]/h
     }
   }
