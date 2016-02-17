@@ -1,13 +1,17 @@
 #!/bin/sh
 
-export CUDA_VISIBLE_DEVICES=7
+CUDA_VISIBLE_DEVICES=7
 SKIP=""
-for d in `seq 1 4`
+
+for d in `seq 0 3`
 do
-  rm -f results/tau$d.csv
+  rm -f results/tau_simulate.csv.$d results/tau_filter.csv.$d
+
   for f in `seq 0 1791`
   do
-      libbi filter @config.conf @tau.conf --init-np $f $SKIP | cut -d ' ' -f 2 >> results/tau$d.csv
-      SKIP="--dry-parse --dry-build"
+      libbi sample @config.conf @tau_simulate.conf --init-np $f $SKIP | cut -d ' ' -f 2 >> results/tau_simulate.csv.$d
+      libbi filter @config.conf @tau_filter.conf --init-np $f $SKIP | cut -d ' ' -f 2 >> results/tau_filter.csv.$d
+
+      SKIP="--dry-parse --dry-build" # next time skip build to speed up
   done
 done

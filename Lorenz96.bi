@@ -5,14 +5,13 @@ model Lorenz96 {
   dim n(size = 8, boundary = 'cyclic')
 
   const h = 0.05      // step size
-  const sigma = 0.1  // diffusion standard deviation
+  const sigma = 0.01  // diffusion standard deviation
   const minF = 0.0
   const maxF = 7.0
 
-  param F                          // forcing
-  state x[n]                       // state variables
-  noise deltaW[n](has_output = 0)  // Wiener process increments
-  obs y[n]                         // observations
+  param F
+  state x[n]
+  obs y[n]
 
   sub parameter {
     F ~ uniform(minF, maxF)
@@ -23,10 +22,10 @@ model Lorenz96 {
   }
 
   sub transition(delta = h) {
-    deltaW[n] ~ wiener()
     ode(alg = 'RK4(3)', h = h, atoler = 1.0e-4, rtoler = 1.0e-4) {
-      dx[n]/dt = x[n-1]*(x[n+1] - x[n-2]) - x[n] + F + sigma*deltaW[n]/h
+      dx[n]/dt = x[n-1]*(x[n+1] - x[n-2]) - x[n] + F
     }
+    x[n] ~ gaussian(x[n], sigma*sqrt(h))
   }
 
   sub observation {

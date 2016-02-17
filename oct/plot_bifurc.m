@@ -1,25 +1,12 @@
-function plot_bifurc(dir)
+function plot_bifurc(init_file, image_file)
   % data extents
-  fs = linspace(0, 7, 1792);
+  fs = ncread(init_file, 'F')(:);
   xs = linspace(-6, 8, 4096);
-
-  % bin
-  file = sprintf('%s/bifurc.nc', dir);
-  x = ncread(file, 'x')(:,:,25001:end);
-  P = zeros(length(xs), length(fs));
-  for i = 1:length(fs)
-    printf("%d ", i);
-    fflush(stdout);
-    n = histc(x(i,:,:)(:), xs);
-    mn = min(n);
-    mx = max(n);
-    p = (n - mn)/(mx - mn);
-    P(:,i) = p;
-  end
+  P = imread(image_file);
 
   cla;
   imagesc (fs, xs, P);
-  colormap(flipud(gray));
+  colormap(gray);
   axis('tight');
   xlabel ('F');
   ylabel ('x');

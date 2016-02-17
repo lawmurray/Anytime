@@ -1,8 +1,9 @@
 #!/bin/sh
 
-#export CUDA_VISIBLE_DEVICES=1,2,3,7
-#libbi sample @config.conf @posterior.conf --tmoves 36000
-libbi sample @config.conf @posterior.conf --nmoves 4
+CUDA_VISIBLE_DEVICES=1,2,3,7
+
+libbi sample @config.conf @posterior.conf --tmoves 36000 --enable-mpi --mpi-np 4
+#libbi sample @config.conf @posterior.conf --nmoves 4 --enable-mpi --mpi-np 4
 
 for i in `seq 0 3`
 do

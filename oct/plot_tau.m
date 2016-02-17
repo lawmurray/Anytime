@@ -1,7 +1,7 @@
 function plot_tau(dir)
   F = ncread('data/init.nc', 'F');
   X = [];
-  for i = 1:8
+  for i = 1:2
     X = [X, dlmread(sprintf('%s/tau%d.csv', dir, i))];
   end
   X = X/1e6;  % convert us to s
