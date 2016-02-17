@@ -34,10 +34,10 @@ model Lorenz96 {
   }
 
   sub proposal_parameter {
-    F ~ truncated_gaussian(F, 1.0e-4, minF, maxF);
+    F ~ truncated_gaussian(F, 1.0e-3, minF, maxF);
   }
 
   sub proposal_initial {
-    x[n] ~ gaussian(x[n], 1.0e-4)
+    x[n] ~ gaussian(x[n], 1.0e-3)
   }
 }

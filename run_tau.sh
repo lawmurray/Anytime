@@ -1,11 +1,13 @@
 #!/bin/sh
 
-export CUDA_VISIBLE_DEVICES=2
-for d in `seq 1 16`
+export CUDA_VISIBLE_DEVICES=7
+SKIP=""
+for d in `seq 1 4`
 do
-  rm results/tau$d.csv
+  rm -f results/tau$d.csv
   for f in `seq 0 1791`
   do
-    libbi sample @config.conf @tau.conf --init-np $f --dry-parse --dry-build | cut -d ' ' -f 2 >> results/tau$d.csv
+      libbi filter @config.conf @tau.conf --init-np $f $SKIP | cut -d ' ' -f 2 >> results/tau$d.csv
+      SKIP="--dry-parse --dry-build"
   done
 done
