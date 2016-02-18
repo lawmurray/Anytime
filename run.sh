@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CUDA_VISIBLE_DEVICES=1,2,3,7
+export CUDA_VISIBLE_DEVICES=1,2,3,7
 
 libbi sample @config.conf @posterior.conf --tmoves 36000 --enable-mpi --mpi-np 4
 #libbi sample @config.conf @posterior.conf --nmoves 4 --enable-mpi --mpi-np 4

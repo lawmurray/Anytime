@@ -1,30 +1,41 @@
-function plot_tau(dir)
-  F = ncread('data/init.nc', 'F');
+function plot_tau(base)
+  f = ncread('data/init.nc', 'F');
   X = [];
-  for i = 1:2
-    X = [X, dlmread(sprintf('%s/tau%d.csv', dir, i))];
+  F = [];
+
+  i = 0;
+  file = sprintf('%s.%d', base, i);
+  while exist(file, 'file')
+    X = [X; dlmread(file)];
+    F = [F; f];
+    i = i + 1;
+    file = sprintf('%s.%d', base, i);
   end
   X = X/1e6;  % convert us to s
 
   % smooth mean
-  m = median(X, 2);
+  inffunc = @infExact;
   meanfunc = @meanConst;
-  hyp.mean = [0.5];
+  hyp.mean = [0.1];
   covfunc = @covSEiso;
-  hyp.cov = log([0.25; 1]);
-  likfunc = @likGauss; sn = 0.1; hyp.lik = log(sn);
-  gp(hyp, @infExact, meanfunc, covfunc, likfunc, F, m);
-  [m s2] = gp(hyp, @infExact, meanfunc, covfunc, likfunc, F, m, F);
+  hyp.cov = [0.9; -3.33];
+  likfunc = @likGauss;
+  hyp.lik = -5.0;
+  hyp = minimize(hyp, @gp, -100, inffunc, meanfunc, covfunc, likfunc, F, X)
+  [m s2] = gp(hyp, inffunc, meanfunc, covfunc, likfunc, F, X, f);
 
   cla;
-  plot(F, X, '.', 'color', [0.8 0.8 0.8], 'markersize', 2);
+  plot(F, X, '.', 'color', [0.7 0.7 0.7], 'markersize', 2);
   hold on;
-  plot(F, m, 'k', 'linewidth', 3);
+  plot(f, m, 'k', 'linewidth', 2);
+  plot(f, m + 1.96*sqrt(s2), 'k', 'linewidth', 1);
+  plot(f, m - 1.96*sqrt(s2), 'k', 'linewidth', 1);
   hold off;
 
   xlabel('F');
   ylabel('c (s)');
-  axis([0 7 0 1]);
+  ax = axis();
+  axis([0 ax(2) 0 ax(4)]);
   grid on;
   box on;
   set(gca, 'ticklength', [0 0]);
