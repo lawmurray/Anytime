@@ -21,7 +21,7 @@ model Lorenz96 {
   }
 
   sub initial {
-    x[n] ~ gaussian(0.0, F/3.0)
+    x[n] ~ gaussian(0.0, sigma)
   }
 
   sub transition(delta = h) {

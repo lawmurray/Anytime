@@ -1,6 +1,6 @@
 function postprocess_tau()
   X = [];
-  for i = 0:75263
+  for i = 0:10751
     printf("%d ", i);
     file = sprintf('results/tau.nc.%d', i);
 

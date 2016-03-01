@@ -1,6 +1,6 @@
 function prepare_init()
   nF = 3584;
-  nS = 21;
+  nS = 3; %21;
   n = nF*nS;
 
   % across prior
@@ -20,7 +20,7 @@ function prepare_init()
   nccreate('data/init_zoom.nc', 'sigma', 'Dimensions', {'np', n});
 
   F = 4.7 + [1:nF]/nF*0.7;
-  sigma = [0:(nS - 1)]/nS*0.02;
+  sigma = [0:(nS - 1)]/(nS - 1)*0.02;
   F = repmat(F, 1, nS)(:);
   sigma = repmat(sigma, nF, 1)(:);
 
@@ -32,7 +32,7 @@ function prepare_init()
   nccreate('data/init_tau.nc', 'sigma', 'Dimensions', {'np', n});
 
   F = [1:nF]/nF*7;
-  sigma = [0:(nS - 1)]/nS*0.02;
+  sigma = [0:(nS - 1)]/(nS - 1)*0.02;
   F = repmat(F, 1, nS)(:);
   sigma = repmat(sigma, nF, 1)(:);
   is = randperm(n);
