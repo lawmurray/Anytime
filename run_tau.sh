@@ -1,14 +1,10 @@
 #!/bin/sh
 
-export CUDA_VISIBLE_DEVICES=7
+export CUDA_VISIBLE_DEVICES=3
 SKIP=""
 
-for d in `seq 0 3`
+for f in `seq 0 75263`
 do
-  for f in `seq 0 1791`
-  do
-      libbi filter @config.conf @tau.conf --init-np $f --output-file results/tau.nc.$d.$f $SKIP
-
-      SKIP="--dry-parse --dry-build" # next time skip build to speed up
-  done
+    libbi filter @config.conf @tau.conf --init-np $f --output-file results/tau.nc.$f $SKIP
+    SKIP="--dry-parse --dry-build" # next time skip build to speed up
 done

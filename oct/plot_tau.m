@@ -1,5 +1,5 @@
 function plot_tau(base)
-  f = ncread('data/init.nc', 'F');
+  f = ncread('data/init_tau.nc', 'F');
   X = [];
   F = [];
 
