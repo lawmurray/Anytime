@@ -25,7 +25,7 @@ model Lorenz96 {
   }
 
   sub transition(delta = h) {
-    ode(alg = 'RK4(3)', h = h, atoler = 1.0e-4, rtoler = 1.0e-4) {
+    ode(alg = 'RK4(3)', h = h, atoler = 1.0e-4, rtoler = 1.0e-6) {
       dx[n]/dt = x[n-1]*(x[n+1] - x[n-2]) - x[n] + F
     }
     x[n] ~ gaussian(x[n], sigma*sqrt(h))
