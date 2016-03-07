@@ -5,19 +5,16 @@ model Lorenz96 {
   dim n(size = 8, boundary = 'cyclic')
 
   const h = 0.05      // step size
+  const sigma = 0.01  // process noise
   const minF = 0.0
   const maxF = 7.0
-  const minS = 0.0
-  const maxS = 0.02
 
   param F
-  param sigma  // diffusion standard deviation
   state x[n]
   obs y[n]
 
   sub parameter {
     F ~ uniform(minF, maxF)
-    sigma ~ uniform(minS, maxS);
   }
 
   sub initial {
@@ -37,7 +34,6 @@ model Lorenz96 {
 
   sub proposal_parameter {
     F ~ truncated_gaussian(F, 1.0e-3, minF, maxF);
-    sigma ~ truncated_gaussian(sigma, 1.0e-3, minS, maxS);
   }
 
   sub proposal_initial {
