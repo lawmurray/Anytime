@@ -11,17 +11,18 @@ function plot_and_print()
   orient('tall');
 
   subplot(3, 2, 1);
-  plot_paths('results/deterministic/bifurc.nc');
+  plot_bifurc('data/init.nc', 'figs/bifurc.png');
   subplot(3, 2, 3);
-  plot_bifurc('results/deterministic/bifurc.nc');
+  plot_tau('results/tau.csv', 2);
   subplot(3, 2, 5);
-  plot_bifurc('results/deterministic/bifurc_zoom.nc');
+  plot_tau('results/tau.csv', 3);
+
   subplot(3, 2, 2);
-  plot_paths('results/stochastic/bifurc.nc');
+  plot_bifurc('data/init_zoom.nc', 'figs/bifurc_zoom.png');
   subplot(3, 2, 4);
-  plot_bifurc('results/stochastic/bifurc.nc');
+  plot_tau('results/tau_zoom.csv', 2);
   subplot(3, 2, 6);
-  plot_bifurc('results/stochastic/bifurc_zoom.nc');
+  plot_tau('results/tau_zoom.csv', 3);
 
   saveas(h, sprintf('%s/lorenz96.svg', figDir));
 end

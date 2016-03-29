@@ -10,7 +10,7 @@ function plot_bifurc(init_file, image_file)
   axis('tight');
   xlabel ('F');
   ylabel ('x');
-  grid on;
+  %grid on;
   box on;
   set(gca, 'ticklength', [0 0]);
 end
