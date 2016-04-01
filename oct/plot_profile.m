@@ -15,7 +15,7 @@ function plot_profile(prefix, image_file)
   nprocs = rank;
 
   % timelines
-  res = 4096;
+  res = 16384;
   ts = linspace(0, max(times(:)), res + 1)(2:(res + 1))';
   timelines = zeros(nprocs, res, 3);
 
@@ -30,9 +30,9 @@ function plot_profile(prefix, image_file)
       time1 = times(i, rank);
 
       if (event0 == 1)
-        c = [0 0 0]'; %watercolour(2)';
+        c = [0.9 0.1 0.0]'; %'watercolour(2)';
       else
-        c = repmat(0.5 + 0.45*rand(), 3, 1);
+        c = [0.7 0.7 0.7]';%repmat(0.5 + 0.45*rand(), 3, 1);
       end
 
       do
@@ -56,11 +56,11 @@ function plot_profile(prefix, image_file)
   end
 
   % fade rows to make distinct
-  %fd = linspace(0.7, 0.9, nprocs)';
-  %fd = fd(randperm(nprocs));
-  %for rank = 1:nprocs
-  %  timelines(rank,:,:) = fd(rank)*timelines(rank,:,:) + (1.0 - fd(rank));
-  %end
+  fd = linspace(0.6, 0.9, nprocs)';
+  fd = fd(randperm(nprocs));
+  for rank = 1:nprocs
+    timelines(rank,:,:) = fd(rank)*timelines(rank,:,:) + (1.0 - fd(rank));
+  end
 
   % image
   imwrite(timelines, image_file);
