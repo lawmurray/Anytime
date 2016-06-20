@@ -15,7 +15,7 @@ function plot_profile(prefix, image_file)
   nprocs = rank;
 
   % timelines
-  res = 16384;
+  res = 4096;
   ts = linspace(0, max(times(:)), res + 1)(2:(res + 1))';
   timelines = zeros(nprocs, res, 3);
 

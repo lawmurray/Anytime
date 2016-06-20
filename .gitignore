@@ -1,1 +1,7 @@
 .Lorenz96
+/figs/
+/gpu128/
+/gpu32/
+/gpu4/
+/gpu6/
+/results/

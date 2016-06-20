@@ -1,13 +1,14 @@
-function plot_paths(dir)
-file = sprintf('%s/bifurc.nc', dir);
-  ps = 1792*[1 3 5 7]/7;
+function plot_paths()
+  file = sprintf('results/bifurc.nc', dir);
+  c = [0; 94; 184]/255;
+  ps = 3584*[1 3 5 7]/7;
   ts = [2000:2400];
   t = bi_read_var(file, 'time', [], [], ts);
   x = bi_read_var(file, 'x', 1, ps, ts);
   cla;
   hold on;
   for i = 1:rows(x);
-    plot(t, x(i,:), 'k', 'linewidth', 0.5*(5 - i));
+    plot(t, x(i,:), 'linewidth', 0.5*(5 - i), 'color', c);
   end
   hold off;
   axis([t(1), t(end), -6 10]);

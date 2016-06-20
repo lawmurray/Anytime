@@ -19,7 +19,7 @@ function plot_tau(file, k)
   %[m s2] = gp(hyp, inffunc, meanfunc, covfunc, likfunc, F, Y, f);
 
   %cla;
-  plot(F, Y, '.k', 'markersize', 2);
+  plot(F, Y, '.', 'markersize', 2, 'color', [0; 94; 184]/255);
   %hold on;
   %plot(f, m, '', 'linewidth', 3, 'color', [0; 94; 184]/255);
   %hold off;
