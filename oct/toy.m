@@ -12,11 +12,12 @@ function [r1, r2] = toy(N, T, rho, k, theta, p, anytime)
       u2 = normcdf(n2);
       x0 = gaminv(u2, k, theta);
       h = poissrnd(x1**p);
-      if (h > 0)
-        h = h - randi(h); % part way through computation
+      h = h - (randi(h + 1) - 1); % part way through computation
+      if h > 0
         X(t:min(T, t + h - 1), n) = x0;
         t = t + h;
       end
+      x0 = x1;
     else
       x0 = gamrnd(k, theta);
     end

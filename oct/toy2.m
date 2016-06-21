@@ -8,8 +8,8 @@ function [r1, r2] = toy2(N, T, rho, k, theta, p, anytime)
     if (anytime)
       x1 = gamrnd(k + p, theta);
       h = poissrnd(x1**p);
+      h = h - (randi(h + 1) - 1); % part way through computation
       if (h > 0)
-        h = h - randi(h); % part way through computation
         X(t:min(T, t + h - 1), n) = x0;
         t = t + h;
       end
