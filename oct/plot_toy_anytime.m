@@ -34,7 +34,7 @@ function plot_toy_anytime()
     end
     hold off;
     grid on;
-    axis([0 100 0.6 1.0]);
+    %axis([0 100 0.6 1.0]);
     title(titles{i}, 'FontWeight', 'Normal');
 
     if i == 1

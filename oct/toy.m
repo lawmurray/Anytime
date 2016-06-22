@@ -3,6 +3,7 @@ function [r1, r2] = toy(N, T, rho, k, theta, p, anytime)
   X = zeros(T,N);
   for (n = 1:N)
     t = 1;
+    h = 0;
 
     if (anytime)
       x1 = gamrnd(k + p, theta);
@@ -11,11 +12,14 @@ function [r1, r2] = toy(N, T, rho, k, theta, p, anytime)
       n0 = normrnd(rho*n1, sqrt(1.0 - rho^2));
       u0 = normcdf(n0);
       x0 = gaminv(u0, k, theta);
-      h = poissrnd(x1^p);
-      h = h - (randi(h + 1) - 1); % part way through computation
-      if h > 0
-        X(t:min(T, t + h - 1), n) = x0;
-        t = t + h;
+      h = gamrnd(x1^p/theta, theta);
+      h = unifrnd(0, h); % part way through computation
+      X(t, n) = x0;
+      t = t + 1;
+      while h > 1 && t <= T
+        X(t, n) = x0;
+        t = t + 1;
+        h = h - 1;
       end
       x0 = x1;
       n0 = n1;
@@ -29,11 +33,12 @@ function [r1, r2] = toy(N, T, rho, k, theta, p, anytime)
       n1 = normrnd(rho*n0, sqrt(1.0 - rho^2));
       u1 = normcdf(n1);
       x1 = gaminv(u1, k, theta);
-      h = poissrnd(x1^p);
-      if (h > 0)
-        X(t:(t + h - 1),n) = x0;
+      h = h + gamrnd(x1^p/theta, theta);
+      while h > 1 && t <= T
+        X(t, n) = x0;
+        t = t + 1;
+        h = h - 1;
       end
-      t = t + h;
       x0 = x1;
       n0 = n1;
     end
