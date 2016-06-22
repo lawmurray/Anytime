@@ -143,17 +143,17 @@ function plot_and_print()
   saveas(h, file);
   svg2pdf(file);
 
-  #clf;
-  #plot_profile('gpu4/sir_time', 'figs/profile_time_gpu4.png');
-  #file = sprintf('%s/profile_time_gpu4.svg', figDir);
-  #saveas(h, file);
-  #svg2pdf(file);
+  %clf;
+  %plot_profile('gpu4/sir_time', 'figs/profile_time_gpu4.png');
+  %file = sprintf('%s/profile_time_gpu4.svg', figDir);
+  %saveas(h, file);
+  %svg2pdf(file);
 
-  #clf;
-  #plot_profile('gpu4/sir_samples', 'figs/profile_samples_gpu4.png');
-  #file = sprintf('%s/profile_samples_gpu4.svg', figDir);
-  #saveas(h, file);
-  #svg2pdf(file);
+  %clf;
+  %plot_profile('gpu4/sir_samples', 'figs/profile_samples_gpu4.png');
+  %file = sprintf('%s/profile_samples_gpu4.svg', figDir);
+  %saveas(h, file);
+  %svg2pdf(file);
 
   clf;
   plot_profile('gpu6/sir_time', 'figs/profile_time_gpu6.png');

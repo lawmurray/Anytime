@@ -8,7 +8,7 @@ function [r1, r2] = toy(N, T, rho, k, theta, p, anytime)
       x1 = gamrnd(k + p, theta);
       u1 = gamcdf(x1, k, theta);
       n1 = norminv(u1);
-      n0 = normrnd(rho*n1, 1.0 - rho^2);
+      n0 = normrnd(rho*n1, sqrt(1.0 - rho^2));
       u0 = normcdf(n0);
       x0 = gaminv(u0, k, theta);
       h = poissrnd(x1^p);
@@ -26,7 +26,7 @@ function [r1, r2] = toy(N, T, rho, k, theta, p, anytime)
     end
 
     while (t <= T)
-      n1 = normrnd(rho*n0, 1.0 - rho^2);
+      n1 = normrnd(rho*n0, sqrt(1.0 - rho^2));
       u1 = normcdf(n1);
       x1 = gaminv(u1, k, theta);
       h = poissrnd(x1^p);

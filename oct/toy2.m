@@ -3,7 +3,6 @@ function [r1, r2] = toy2(N, T, rho, k, theta, p, anytime)
   X = zeros(T,N);
   for (n = 1:N)
     t = 1;
-
     x0 = gamrnd(k, theta);
     u0 = gamcdf(x0, k, theta);
     n0 = norminv(u0);
@@ -22,7 +21,7 @@ function [r1, r2] = toy2(N, T, rho, k, theta, p, anytime)
     n1 = norminv(u1);
 
     while (t <= T)
-      n2 = normrnd(rho*n0, 1.0 - rho^2);
+      n2 = normrnd(rho*n0, sqrt(1.0 - rho^2));
       u2 = normcdf(n2);
       x2 = gaminv(u2, k, theta);
       h = poissrnd(x2^p);
