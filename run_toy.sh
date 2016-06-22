@@ -1,3 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-octave --path oct -q --eval 'prepare_toy()'
+for i in `seq 1 8`
+do
+  octave --path oct -q --eval "prepare_toy($i)" &
+done
