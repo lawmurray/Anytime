@@ -1,30 +1,17 @@
 function prepare_toy()
-  N = 1000;
-  T = 201;
-  k = 2.0;
+  N = 10000;
+  T = 101;
+  k = 1.0;
   theta = 1.0;
 
   A = [ 0 0;
-pl	0 0.5;
-	1 0;
-	1 0.5;
-	2 0;
-	2 0.5;
-	3 0;
-	3 0.5 ];
-
-  % reference
-  %X = gamrnd(k, theta, N, T);
-  NR = normrnd(0.0, 1.0, N, T);
-  UR = normcdf(NR, 0.0, 1.0);
-  XR = gaminv(UR, k, theta);
-  r = zeros(T,1);
-  for t = 1:T
-    [q1,x] = ecdf(XR(:,t));
-    q2 = gamcdf(x, k, theta);
-    r(t) = corr(q1, q2);
-  end
-  dlmwrite('results/ref.csv', r');
+        0 0.5;
+        1 0;
+        1 0.5;
+        2 0;
+        2 0.5;
+        3 0;
+        3 0.5 ];
 
   parfor i = 1:8
     p = A(i,1);

@@ -10,51 +10,68 @@ function plot_toy()
        2; 2; 1; 1; 
   };
   titles = {
-      'p = 0, \rho = 0';
+      %'p = 0, \rho = 0';
+      %'p = 1, \rho = 0';
+      %'p = 2, \rho = 0';
+      %'p = 3, \rho = 0';
       'p = 0, \rho = 0.5';
-      'p = 1, \rho = 0';
       'p = 1, \rho = 0.5';
-      'p = 2, \rho = 0';
       'p = 2, \rho = 0.5';
-      'p = 3, \rho = 0';
       'p = 3, \rho = 0.5';
   };
   
   clf;
-  for i = 1:8
-    subplot(4, 2, i);
+  order = [2 4 6 8];
+  for i = 1:4;
+    h = subplot(1, 4, i);
+    pos = get(h, 'pos');
+    pos(1) = pos(1) - 0.01;
+    %pos(2) = pos(2) - 0.01;
+    pos(3) = pos(3) + 0.02;
+    %pos(4) = pos(4) + 0.02;
+    set(h, 'pos', pos);
     
-    R = dlmread(sprintf('results/toy%d.csv', i));
+    R = dlmread(sprintf('results/toy%d.csv', order(i)));
     t = 0:(size(R,2) - 1);
 
-    %plot(t, ref, ...
-    %    'linestyle', '-', ...
-    %    'color', watercolour(2), ...
-    %    'linewidth', 2);
-    for (j = 1:4)
-      plot(t, R(2*j - 1,:), ...
-          'linestyle', linestyles{j}, ...
-          'color', watercolour(colours{j}), ...
-          'linewidth', linewidths{j});
-      hold on;
-    end
+    hold on;
+    area_between(t, R(5,:), R(7,:), watercolour(1), 0.5, 1);
+    h4 = plot(t, R(7,:), ...
+        'linestyle', '-', ...
+        'color', watercolour(1), ...
+        'linewidth', 2);
+    h3 = plot(t, R(5,:), ...
+        'linestyle', ':', ...
+        'color', watercolour(1), ...
+        'linewidth', 2);
+    area_between(t, R(1,:), R(3,:), watercolour(2), 1, 0.5);
+    h2 = plot(t, R(3,:), ...
+        'linestyle', '-', ...
+        'color', watercolour(2), ...
+        'linewidth', 1);
+    h1 = plot(t, R(1,:), ...
+        'linestyle', ':', ...
+        'color', watercolour(2), ...
+        'linewidth', 1);
+
     hold off;
     grid on;
-    axis([0 50 0.95 1.0]);
+    axis([0 100 0.75 1.0]);
+    set(gca, 'ticklength', [0,0]);
     title(titles{i}, 'FontWeight', 'Normal');
 
-    if mod(i, 2) == 1
+    if i == 1 || i == 5
       ylabel('R');
+    else
+      set(gca, 'YTickLabel', {});
     end
-    if i == 7 || i == 8
-      xlabel('t');
-    end
+    xlabel('t');
     if i == 1
-      legend( ...
-          'K = 1, initialise from target', ...
-          'K = 1, initialise from anytime', ...
-          'K = 2, initialise from target', ...
-          'K = 2, initialise from anytime', ...
+      legend([h4 h3 h2 h1], ...
+          '1. K = 2, X(0) ~ \alpha(dx)', ...
+          '2. K = 2, X(0) ~ \pi(dx)', ...
+          '3. K = 1, X(0) ~ \alpha(dx)', ...
+          '4. K = 1, X(0) ~ \pi(dx)', ...
           'location', 'southwest');
           legend('boxoff');
     end
