@@ -19,14 +19,14 @@ function plot_tau(file, k)
   %[m s2] = gp(hyp, inffunc, meanfunc, covfunc, likfunc, F, Y, f);
 
   %cla;
-  plot(F, Y, '.', 'markersize', 2, 'color', [0; 94; 184]/255);
+  plot(F, Y, '.', 'markersize', 2, 'color', [0; 0; 0]);
   %hold on;
   %plot(f, m, '', 'linewidth', 3, 'color', [0; 94; 184]/255);
   %hold off;
 
   xlabel('F');
   if k == 3
-    ylabel('c (s)');
+    ylabel('compute time (s)');
     ax = axis();
     axis([ax(1) ax(2) 0 ax(4)]);
   else

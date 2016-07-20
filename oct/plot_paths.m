@@ -1,6 +1,6 @@
 function plot_paths()
   file = sprintf('results/bifurc.nc', dir);
-  c = [0; 94; 184]/255;
+  c = [0; 0; 0];
   ps = 3584*[1 3 5 7]/7;
   ts = [2000:2400];
   t = bi_read_var(file, 'time', [], [], ts);

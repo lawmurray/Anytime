@@ -16,7 +16,8 @@ function plot_profile(prefix, image_file)
 
   % timelines
   res = 4096;
-  ts = linspace(0, max(times(:)), res + 1)(2:(res + 1))';
+  ts = linspace(0, max(times(:)), res + 1);
+  ts = ts(2:(res + 1))';
   timelines = zeros(nprocs, res, 3);
 
   for rank = 1:nprocs
@@ -25,17 +26,17 @@ function plot_profile(prefix, image_file)
     time0 = times(i, rank);
     t = 1;
 
-    for i = 2:rows(events)
+    for i = 2:size(events, 1)
       event1 = events(i, rank);
       time1 = times(i, rank);
 
       if (event0 == 1)
-        c = [0.9 0.1 0.0]'; %'watercolour(2)';
+        c = [0.0 0.0 0.0]';
       else
-        c = [0.7 0.7 0.7]';%repmat(0.5 + 0.45*rand(), 3, 1);
+        c = [0.7 0.7 0.7]';
       end
 
-      do
+      while (t == 1 || ts(t - 1) < time1)
         if t > 1
           from = max(time0, ts(t - 1));
           to = min(time1, ts(t));
@@ -47,7 +48,7 @@ function plot_profile(prefix, image_file)
         end
         timelines(rank,t,:) = squeeze(timelines(rank,t,:)) + w1*c;
         t = t + 1;
-      until (ts(t - 1) >= time1)
+      end
       t = t - 1;
 
       event0 = event1;
