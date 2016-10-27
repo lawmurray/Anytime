@@ -1,28 +1,30 @@
 function prepare_toy()
-  N = 10000;
-  T = 101;
-  k = 1.0;
-  theta = 1.0;
+  N = 1000;
+  T = 201;
+  alpha = 2.0;
+  theta = 0.5;
+  rho = 0.8;
 
-  A = [ 0 0;
-        0 0.5;
-        1 0;
-        1 0.5;
-        2 0;
-        2 0.5;
-        3 0;
-        3 0.5 ];
+  parfor p = 0:3
+    % anytime runs
+    R = zeros(1,T);
+    R(1,:) = toyK(1, T, N, rho, alpha, theta, p, 0, 1);
+    file = sprintf('results/toy_anytime_%d.csv', p);
+    dlmwrite(file, R);
 
-  parfor i = 1:8
-    p = A(i,1);
-    rho = A(i,2);
+    % K-chain uncorrected runs
+    R = zeros(4,T);
+    for lgK = 1:size(R,1)
+      R(lgK,:) = toyK(2^lgK, T, N, rho, alpha, theta, p, 0, 0);
+    end
+    file = sprintf('results/toy_uncorrected_%d.csv', p);
+    dlmwrite(file, R);
 
-    [r1,r2] = toy(N, T, rho, k, theta, p, 0);
-    [r3,r4] = toy(N, T, rho, k, theta, p, 1);
-    [r5,r6] = toy2(N, T, rho, k, theta, p, 0);
-    [r7,r8] = toy2(N, T, rho, k, theta, p, 1);
-
-    file = sprintf('results/toy%d.csv', i);
-    dlmwrite(file, [ r1 r2 r3 r4 r5 r6 r7 r8 ]');
+    % K-chain corrected runs
+    for lgK = 1:size(R,1)
+      R(lgK,:) = toyK(2^lgK, T, N, rho, alpha, theta, p, 1, 0);
+    end
+    file = sprintf('results/toy_corrected_%d.csv', p);
+    dlmwrite(file, R);
   end
 end

@@ -81,22 +81,26 @@ function plot_and_print()
 
   clf;
   subplot(1, 2, 1);
-  bi_hist('results/gpu128/posterior_samples.nc', 'F', [], [], [], 20, [], 0);
+  bi_hist('results/gpu8/posterior_samples.nc', 'F', [], [], [], 20, [], 0);
   ax = axis();
   axis([4.82 4.96 ax(3) ax(4)]);
   line([4.8801 4.8801], [ax(3) ax(4)], 'color', 'k');
   xlabel('F');
   ylabel('posterior density');
   grid on;
+  box on;
+  set(gca, 'ticklength', [0 0]);
   
   subplot(1, 2, 2);  
-  bi_hist('results/gpu128/posterior_time.nc', 'F', [], [], [], 20, [], 0);
+  bi_hist('results/gpu8/posterior_time.nc', 'F', [], [], [], 20, [], 0);
   ax = axis();
   axis([4.82 4.96 ax(3) ax(4)]);
   line([4.8801 4.8801], [ax(3) ax(4)], 'color', 'k');
   xlabel('F');
   ylabel('posterior density');
   grid on;
+  box on;
+  set(gca, 'ticklength', [0 0]);
   
   file = sprintf('%s/posterior.pdf', figDir);
   saveas(h, file);
@@ -109,12 +113,17 @@ function plot_and_print()
   orient('landscape');
   
   clf;
-  plot_toy;
-  file = sprintf('%s/toy.pdf', figDir);
+  plot_toy('anytime');
+  file = sprintf('%s/toy_anytime.pdf', figDir);
   saveas(h, file);
 
   clf;
-  plot_toy_anytime;
-  file = sprintf('%s/toy_anytime.pdf', figDir);
+  plot_toy('uncorrected');
+  file = sprintf('%s/toy_uncorrected.pdf', figDir);
+  saveas(h, file);
+
+  clf;
+  plot_toy('corrected');
+  file = sprintf('%s/toy_corrected.pdf', figDir);
   saveas(h, file);
 end
