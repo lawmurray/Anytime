@@ -13,7 +13,10 @@ function plot_toy(name)
     hold on;
     for lgK = 1:size(R,1)
       c = ones(3,1) - lgK/size(R,1);
-      area_between(t', R(lgK,:)', ones(1,size(R,2))', c, 1.0, 0.5);
+      area_between(t', R(lgK,:)', zeros(1,size(R,2))', c, 0.5, 1.0);
+    end
+    for lgK = 1:size(R,1)
+      c = ones(3,1) - lgK/size(R,1);
       h = plot(t, R(lgK,:), ...
         'linestyle', '-', ...
         'color', c, ...
@@ -21,7 +24,8 @@ function plot_toy(name)
     end
     grid on;
     box on;
-    axis([0 100 0.95 1.0]);
+    ax = axis();
+    axis([0 ax(2) 0.0 1.0]);
     set(gca, 'ticklength', [0,0]);
     title(sprintf('p = %d', p), 'FontWeight', 'Normal');
     if p == 0
