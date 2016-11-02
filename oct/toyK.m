@@ -22,11 +22,7 @@ function d = toyK(K, T, N, rho, alpha, theta, p, correct, anytime)
     t = 1;
     h = 0;
     while t <= T
-      u = gamcdf(x(k), alpha, theta);
-      z = norminv(u);
-      z = normrnd(rho*z, sqrt(1.0 - rho^2));
-      u = normcdf(z);
-      x(k) = gaminv(u, alpha, theta);
+      % hold k-th state
       h = h + gamrnd(x(k)^p/theta, theta);
       while h > 1 && t <= T
         if (correct)
@@ -37,6 +33,13 @@ function d = toyK(K, T, N, rho, alpha, theta, p, correct, anytime)
         t = t + 1;
         h = h - 1;
       end
+      
+      % update k-th state
+      u = gamcdf(x(k), alpha, theta);
+      z = norminv(u);
+      z = normrnd(rho*z, sqrt(1.0 - rho^2));
+      u = normcdf(z);
+      x(k) = gaminv(u, alpha, theta);
       
       % next chain
       k = k + 1;
@@ -112,11 +115,12 @@ function d = toyK(K, T, N, rho, alpha, theta, p, correct, anytime)
           a2 = integral(F, x(m - 1), x(m));
           d1 = d1 + abs(a1 - a2);
         end
-        d(t) = d1;
       end
     end
     
     % right tail
-    d(t) = d(t) + integral(G, x(end), Inf);
+    d1 = d1 + integral(G, x(end), Inf);
+    
+    d(t) = d1;
   end
 end
