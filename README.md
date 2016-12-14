@@ -1,5 +1,5 @@
-Lorenz '96 model
-================
+Anytime Monte Carlo Experiments
+===============================
 
 Synopsis
 --------
