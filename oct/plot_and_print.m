@@ -20,7 +20,7 @@ function plot_and_print()
   subplot(3, 2, 2);
   plot_bifurc('data/init_zoom.nc', 'figs/bifurc_zoom.png');
   ax = axis();
-  axis([4.82 4.96 -5 8]);
+  axis([4.75 5.0 -5 8]);
 
   subplot(3, 2, 3);
   plot_tau('results/tau.csv', 2);
@@ -31,7 +31,7 @@ function plot_and_print()
 
   subplot(3, 2, 4);
   plot_tau('results/tau_zoom.csv', 2);
-  axis([4.82 4.96 -90 -84]);
+  axis([4.75 5.0 -90 -84]);
   ax = axis();
   line([4.8801 4.8801], [ax(3) ax(4)], 'color', 'k');
 
@@ -45,7 +45,7 @@ function plot_and_print()
   subplot(3, 2, 6);
   plot_tau('results/tau_zoom.csv', 3);
   ax = axis();
-  axis([4.82 4.96 ax(3) ax(4)]);
+  axis([4.75 5.0 ax(3) ax(4)]);
   ax = axis();
   line([4.8801 4.8801], [ax(3) ax(4)], 'color', 'k');
 
@@ -82,27 +82,49 @@ function plot_and_print()
   clf;
   subplot(1, 2, 1);
   bi_hist('results/gpu8/posterior_samples.nc', 'F', [], [], [], 20, [], 0);
+  axis([4.75 5.0 0 14]);
   ax = axis();
-  axis([4.82 4.96 ax(3) ax(4)]);
   line([4.8801 4.8801], [ax(3) ax(4)], 'color', 'k');
   xlabel('F');
-  ylabel('posterior density');
   grid on;
   box on;
   set(gca, 'ticklength', [0 0]);
   
   subplot(1, 2, 2);  
   bi_hist('results/gpu8/posterior_time.nc', 'F', [], [], [], 20, [], 0);
+  axis([4.75 5.0 0 14]);
   ax = axis();
-  axis([4.82 4.96 ax(3) ax(4)]);
   line([4.8801 4.8801], [ax(3) ax(4)], 'color', 'k');
   xlabel('F');
-  ylabel('posterior density');
   grid on;
   box on;
   set(gca, 'ticklength', [0 0]);
   
-  file = sprintf('%s/posterior.pdf', figDir);
+  file = sprintf('%s/posterior8.pdf', figDir);
+  saveas(h, file);
+
+  clf;
+  subplot(1, 2, 1);
+  bi_hist('results/gpu128/posterior_samples.nc', 'F', [], [], [], 20, [], 0);
+  axis([4.75 5.0 0 14]);
+  ax = axis();
+  line([4.8801 4.8801], [ax(3) ax(4)], 'color', 'k');
+  xlabel('F');
+  grid on;
+  box on;
+  set(gca, 'ticklength', [0 0]);
+  
+  subplot(1, 2, 2);  
+  bi_hist('results/gpu128/posterior_time.nc', 'F', [], [], [], 20, [], 0);
+  axis([4.75 5.0 0 14]);
+  ax = axis();
+  line([4.8801 4.8801], [ax(3) ax(4)], 'color', 'k');
+  xlabel('F');
+  grid on;
+  box on;
+  set(gca, 'ticklength', [0 0]);
+  
+  file = sprintf('%s/posterior128.pdf', figDir);
   saveas(h, file);
 
   % toy experiments

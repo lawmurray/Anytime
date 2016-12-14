@@ -70,8 +70,8 @@ function plot_profile(prefix, image_file)
   cla;
   image(ts/1e6/60, [1:nprocs]', timelines);
   axis('tight');
-  xlabel ('time (min)');
-  ylabel ('rank');
+  xlabel ('real time (min)');
+  ylabel ('p');
   %grid on;
   box on;
   set(gca, 'ticklength', [0 0]);

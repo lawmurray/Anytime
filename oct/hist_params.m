@@ -37,7 +37,7 @@ function hist_params ()
 	x = linspace(axis()(1), axis()(2), 500);
         bi_plot_prior (x, prior_pdfs{i}, prior_params{i});
 	xlabel(titles{i});
-	ylabel(sprintf("p(%s)", titles{i}));
+	ylabel(sprintf('p(%s)', titles{i}));
 	grid on;
 	box off;
 	hold off;
