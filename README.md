@@ -5,56 +5,37 @@ Synopsis
 --------
 
     ./run.sh
+    
+Runs the Lorenz '96 inference experiments using SMC$^2$ on a cluster.
 
-This samples from the prior and posterior distributions, and performs a
-posterior prediction. The `oct/` directory contains a few functions for
-plotting these results (GNU Octave and OctBi required). In particular, after
-`./run.sh`, the `plot_and_print` function will produce SVG figures in the
-`figs/` directory.
+    ./run_toy.sh
 
-    ./time.sh
+Runs the toy examples in GNU Octave. Alternatively, these can be run from MATLAB, inspect the script to see how this works.
 
-This can be used to reproduce the timing results in Murray (2013).
+    ./run_tau.sh
+    
+Runs the Lorenz '96 likelihood and timing experiments.
 
-A synthetic data set is provided, but a new one may be generated with
-`init.sh` (GNU Octave and OctBi required). A number of `qsub_*.sh` scripts are
-also provided that may assist with setting up the package to run on a cluster.
+    ./run_bifurc.sh
+    
+Runs the Lorenz '96 experiments necessary to construct the bifurcation plots in the paper.
+
+    ./plot.sh
+    
+Produces all plots after these runs are complete.
 
 
 Description
 -----------
 
-The original, deterministic Lorenz '96 model (Lorenz 2006) is given by
+This package can be used to reproduce the results of the experiments in Murray *et al.* 2016.
 
-$$\frac{dx_{n}}{dt}=x_{n-1}(x_{n+1}-x_{n-2})-x_{n}+F,$$
+Some configuration of the `*.sh` scripts and associated `*.conf` configuration files may be necessary to get them running on a particular system. Also see the Lorenz96 package, on which this package is based.
 
-where $\mathbf{x}$ is the state vector, of length 8 in this package, with
-subscripts indexing its components in a circular fashion. $F$ is a forcing
-parameter. This form of the model is given in the `Lorenz96Deterministic.bi`
-file.
+The package requires new features in LibBi 1.3.0.
 
-A stochastic extension of the model adds an additional $\sigma$ parameter and
-rewrites the above ordinary differential equation as a stochastic differential
-equation:
-
-$$dx_{n}=\left(x_{n-1}(x_{n+1}-x_{n-2})-x_{n}+F\right)\, dt+\sigma\, dW_{n}.$$
-
-This form is specified in `Lorenz96.bi` and used for inference in LibBi.
-
-The interest in the Lorenz '96 model is that its dimensionality can be scaled
-arbitrarily, and that, according to this number of dimensions and $F$, the
-deterministic model exhibits varying behaviours from convergence, to
-periodicity, to chaos. The stochastic model exhibits similar behaviours.
-
-The model is one of the examples given in the LibBi introductory paper (Murray
-2013). The package may be used to reproduce the results in that paper.
 
 References
 ----------
 
-E. N. Lorenz. Chapter 3: Predictability -- a problem partly solved. In
-*Predictability of Weather and Climate*, Cambridge University Press, 2006,
-40-58.
-
-L. M. Murray. *Bayesian state-space modelling on high-performance hardware
-using LibBi*. 2013.
+L. M. Murray, S. Singh, P. E. Jacob and A. Lee. *Anytime Monte Carlo*. 2016. Online at [https://arxiv.org/abs/1612.03319](https://arxiv.org/abs/1612.03319).
