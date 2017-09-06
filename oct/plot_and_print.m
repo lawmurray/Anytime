@@ -148,4 +148,9 @@ function plot_and_print()
   plot_toy('corrected');
   file = sprintf('%s/toy_corrected.pdf', figDir);
   saveas(h, file);
+
+  clf;
+  plot_toy('marginal');
+  file = sprintf('%s/toy_marginal.pdf', figDir);
+  saveas(h, file);
 end

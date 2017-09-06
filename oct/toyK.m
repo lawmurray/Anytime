@@ -3,9 +3,11 @@
 % plot correlation coefficients against the target and anytime
 % distributions.
 %
-function d = toyK(K, T, N, rho, alpha, theta, p, correct, anytime)
+function d = toyK(K, T, N, rho, alpha, theta, p, correct, marginal, anytime)
   if (correct)
     L = K - 1;
+  elseif (marginal)
+    L = 1;
   else
     L = K;
   end
@@ -27,6 +29,8 @@ function d = toyK(K, T, N, rho, alpha, theta, p, correct, anytime)
       while h > 1 && t <= T
         if (correct)
           X1(:,t) = x([1:(k-1) (k+1):K]);
+        elseif (marginal)
+          X1(:,t) = x(k);
         else
           X1(:,t) = x;
         end

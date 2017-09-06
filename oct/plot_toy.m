@@ -34,8 +34,10 @@ function plot_toy(name)
         ylabel('d_1(F_n, F_\alpha)');
       elseif strcmp(name, 'uncorrected')
         ylabel('d_1(F_n, F_\pi)');
-      else
+      elseif strcmp(name, 'corrected')
         ylabel('d_1(F_{nK/(K+1)}, F_\pi)');
+      elseif strcmp(name, 'marginal')
+        ylabel('d_1(F_n}, F_\alpha)');
       end
     else
       set(gca, 'YTickLabel', {});
